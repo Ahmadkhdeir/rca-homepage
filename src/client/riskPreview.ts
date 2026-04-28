@@ -43,7 +43,6 @@ const riskPreview = `
           <span>11 ACL changes</span>
         </div>
       </div>
-
       <div class="gauge-wrap">
         <svg width="60" height="60" viewBox="0 0 80 80">
           <circle cx="40" cy="40" r="30" fill="none" stroke="#f0e8e8" stroke-width="7"
@@ -67,80 +66,110 @@ const riskPreview = `
 
 <script>
 (function () {
-  const STEPS = [
-    { label: "Reading update set", detail: "14 records found" },
-    { label: "Scanning sensitive tables", detail: "3 tables matched" },
-    { label: "Evaluating business rules", detail: "4 rules modified" },
-    { label: "Checking ACL changes", detail: "11 ACL changes found" },
-    { label: "Calculating risk score", detail: "score: 78 pts" },
-    { label: "Classifying risk level", detail: "HIGH RISK" }
+  var STEPS = [
+    { label: "Reading update set",        detail: "14 records found"     },
+    { label: "Scanning sensitive tables", detail: "3 tables matched"     },
+    { label: "Evaluating business rules", detail: "4 rules modified"     },
+    { label: "Checking ACL changes",      detail: "11 ACL changes found" },
+    { label: "Calculating risk score",    detail: "score: 78 pts"        },
+    { label: "Classifying risk level",    detail: "HIGH RISK"            }
   ];
 
-  const STEP_DURATION = 900;
-  const RESULT_HOLD = 2800;
+  var STEP_DURATION = 950;
+  var RESULT_HOLD   = 3200;
 
-  const grid = document.getElementById("stepsGrid");
-  const loopBar = document.getElementById("loopBar");
+  var grid    = document.getElementById("stepsGrid");
+  var loopBar = document.getElementById("loopBar");
 
-  STEPS.forEach((s, i) => {
-    const el = document.createElement("div");
+  STEPS.forEach(function(s, i) {
+    var el = document.createElement("div");
     el.className = "step";
-    el.innerHTML = \`
-      <div class="step-icon"><span class="step-icon-inner">\${i + 1}</span></div>
-      <div>
-        <div class="step-label">\${s.label}</div>
-        <div class="step-detail">pending</div>
-      </div>
-    \`;
+    el.id = "step-" + i;
+    el.innerHTML =
+      '<div class="step-icon" id="step-icon-' + i + '">' +
+        '<span class="step-icon-inner" id="step-icon-inner-' + i + '">' + (i + 1) + '</span>' +
+      '</div>' +
+      '<div>' +
+        '<div class="step-label">' + s.label + '</div>' +
+        '<div class="step-detail" id="step-detail-' + i + '">pending</div>' +
+      '</div>';
     grid.appendChild(el);
 
-    const dot = document.createElement("div");
-    dot.className = "loop-dot";
-    loopBar.appendChild(dot);
+    var d = document.createElement("div");
+    d.className = "loop-dot";
+    d.id = "dot-" + i;
+    loopBar.appendChild(d);
   });
 
-  function reset() {
-    document.querySelectorAll(".step").forEach((el, i) => {
+  function setDot(idx) {
+    document.querySelectorAll(".loop-dot").forEach(function(d, i) {
+      d.classList.toggle("active", i === idx);
+    });
+  }
+
+  function resetUI() {
+    STEPS.forEach(function(s, i) {
+      var el = document.getElementById("step-" + i);
       el.className = "step";
-      el.querySelector(".step-icon-inner").textContent = i + 1;
-      el.querySelector(".step-detail").textContent = "pending";
+      document.getElementById("step-icon-inner-" + i).innerHTML = "" + (i + 1);
+      document.getElementById("step-detail-" + i).textContent = "pending";
     });
     document.getElementById("resultCard").classList.remove("revealed");
+    document.getElementById("resultBadgeText").textContent = "PENDING";
     document.getElementById("gaugeNum").textContent = "—";
     document.getElementById("gaugeArc").setAttribute("stroke-dasharray", "0 188");
     document.getElementById("statusPill").textContent = "Analyzing…";
+    document.getElementById("badgeSpinner").style.display = "";
+    document.getElementById("badgeText").textContent = "Analyzing…";
+    var badge = document.getElementById("analyzingBadge");
+    badge.style.background = "#f0eaff";
+    badge.style.borderColor = "#d4c0ff";
+    badge.style.color = "#7b4fe0";
+    setDot(-1);
   }
 
-  function run() {
-    reset();
-    STEPS.forEach((s, i) => {
-      setTimeout(() => {
-        const step = grid.children[i];
-        step.classList.add("active");
-        step.querySelector(".step-icon-inner").innerHTML = "<div class='mini-spinner'></div>";
-        step.querySelector(".step-detail").textContent = "in progress…";
-      }, i * STEP_DURATION);
+  function activateStep(i) {
+    var el = document.getElementById("step-" + i);
+    el.className = "step active";
+    document.getElementById("step-icon-inner-" + i).innerHTML = '<div class="mini-spinner"></div>';
+    document.getElementById("step-detail-" + i).textContent = "in progress…";
+    setDot(i);
+  }
 
-      setTimeout(() => {
-        const step = grid.children[i];
-        step.classList.remove("active");
-        step.classList.add("done");
-        step.querySelector(".step-icon-inner").textContent = "✓";
-        step.querySelector(".step-detail").textContent = s.detail;
-      }, i * STEP_DURATION + STEP_DURATION - 100);
+  function completeStep(i) {
+    var el = document.getElementById("step-" + i);
+    el.className = "step done";
+    document.getElementById("step-icon-inner-" + i).innerHTML = "✓";
+    document.getElementById("step-detail-" + i).textContent = STEPS[i].detail;
+  }
+
+  function revealResult() {
+    document.getElementById("resultCard").classList.add("revealed");
+    document.getElementById("resultBadgeText").textContent = "HIGH RISK";
+    document.getElementById("gaugeNum").textContent = "78";
+    document.getElementById("gaugeArc").setAttribute("stroke-dasharray", (78 / 100 * 141) + " 188");
+    document.getElementById("statusPill").textContent = "Complete";
+    document.getElementById("badgeSpinner").style.display = "none";
+    document.getElementById("badgeText").textContent = "HIGH RISK · 78 pts";
+    var badge = document.getElementById("analyzingBadge");
+    badge.style.background = "#fff0ef";
+    badge.style.borderColor = "#ffbab6";
+    badge.style.color = "#e5534b";
+    setDot(STEPS.length - 1);
+  }
+
+  function runCycle() {
+    resetUI();
+    STEPS.forEach(function(_, i) {
+      setTimeout(function() { activateStep(i); }, i * STEP_DURATION);
+      setTimeout(function() { completeStep(i); }, i * STEP_DURATION + STEP_DURATION - 80);
     });
-
-    setTimeout(() => {
-      document.getElementById("resultCard").classList.add("revealed");
-      document.getElementById("gaugeNum").textContent = "78";
-      document.getElementById("gaugeArc").setAttribute("stroke-dasharray", "110 188");
-      document.getElementById("statusPill").textContent = "Complete";
-    }, STEPS.length * STEP_DURATION + 200);
-
-    setTimeout(run, STEPS.length * STEP_DURATION + RESULT_HOLD);
+    var revealAt = STEPS.length * STEP_DURATION + 100;
+    setTimeout(revealResult, revealAt);
+    setTimeout(runCycle, revealAt + RESULT_HOLD);
   }
 
-  setTimeout(run, 400);
+  setTimeout(runCycle, 400);
 })();
 </script>
 `;
