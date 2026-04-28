@@ -1,0 +1,317 @@
+/* ===============================
+   Base
+   =============================== */
+
+body {
+  margin: 0;
+  background: #07162d;
+  color: #eef2ff;
+  font-family: "Segoe UI", Inter, system-ui, sans-serif;
+}
+
+.summit-root {
+  min-height: 100vh;
+}
+
+/* ===============================
+   HERO
+   =============================== */
+
+.summit-hero {
+  padding: 4rem 3rem;
+  background: linear-gradient(
+    120deg,
+    #07162d 0%,
+    #0b2c5f 60%,
+    #1f6f43 100%
+  );
+}
+
+.summit-hero-content {
+  max-width: 900px;
+}
+
+.summit-hero h1 {
+  font-size: 2.8rem;
+  margin: 0;
+}
+
+.summit-hero h2 {
+  font-weight: 400;
+  opacity: 0.8;
+  margin-top: 0.25rem;
+}
+
+.summit-hero p {
+  margin-top: 1.5rem;
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+
+.summit-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px; /* text | logo */
+  align-items: center;
+  gap: 3rem;
+}
+
+
+.summit-hero-logo {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+.summit-logo {
+  width: 220px;
+  height: auto;
+}
+
+/* ===============================
+   SECTION BASE
+   =============================== */
+
+/* ===============================
+   Hackathon section layout (FIXED)
+   =============================== */
+
+.summit-section {
+  position: relative;
+  padding: 3rem;
+  max-width: 1400px;
+}
+
+/* This section acts as a stage */
+/* ===============================
+   Hackathon section layout (RESET)
+   =============================== */
+
+   
+/* ===============================
+   Hackathon Stage (FINAL ✅)
+   =============================== */
+
+
+
+.hackathon-stage {
+  display: grid;
+  grid-template-columns: minmax(420px, 1fr) minmax(520px, 2fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+
+
+/* LEFT CONTENT */
+
+.hackathon-left {
+  max-width: 720px;
+}
+
+
+/* RIGHT PREVIEW COLUMN */
+
+
+.hackathon-right {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+
+
+/* ===============================
+   Risk Preview (Tablet)
+   =============================== */
+
+
+.risk-preview-wrapper {
+  width: 100%;
+}
+
+.risk-preview-wrapper .widget {
+  width: 100%;
+  min-height: clamp(420px, 50vh, 620px);
+  border-radius: 22px;
+  box-shadow: 0 32px 90px rgba(0,0,0,0.5);
+}
+
+
+/* ===============================
+   CTA
+   =============================== */
+
+.go-to-app-btn {
+  margin-top: 1.5rem;
+  align-self: flex-start;
+  background: #9b6dff;
+  color: white;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+
+.go-to-app-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(155,109,255,0.4);
+}
+
+
+
+/* ===============================
+   Highlight box
+   =============================== */
+
+.highlight {
+  background: rgba(31, 111, 67, 0.25);
+  padding: 1rem;
+  border-left: 4px solid #1f6f43;
+  margin: 1.5rem 0;
+}
+
+/* ===============================
+   Value cards
+   =============================== */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.value-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+/* ===============================
+   Team
+   =============================== */
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.team-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.team-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 0.5rem;
+}
+
+.team-name {
+  font-weight: 600;
+}
+
+.team-role {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+/* ===============================
+   Risk App Preview Widget
+   =============================== */
+
+.widget {
+  background: #f0f2f5;
+  border-radius: 14px;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+.titlebar {
+  background: #252840;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-icon {
+  width: 22px;
+  height: 22px;
+  background: #9b6dff;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-title {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.app-sub {
+  color: #6b7899;
+  font-size: 9px;
+}
+
+.status-pill {
+  background: rgba(155,109,255,0.18);
+  border: 1px solid rgba(155,109,255,0.35);
+  color: #c4a8ff;
+  font-size: 9px;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 2px 9px;
+}
+
+.body {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* keep rest of widget styles unchanged */
+
+
+@media (max-width: 1100px) {
+  .hackathon-stage {
+    grid-template-columns: 1fr;
+  }
+
+  .hackathon-right {
+    margin-top: 3rem;
+  }
+}
+
+/* ===============================
+   Global layout system (FIX)
+   =============================== */
+
+/* Full-width section */
+.section-full {
+  width: 100%;
+  padding: 3rem 0;
+}
+
+/* Inner constrained content */
+.section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}

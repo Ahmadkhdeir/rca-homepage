@@ -1,0 +1,6 @@
+{
+  "scope": "x_488299_home_page",
+  "scopeId": "52f223eaeb1a46e49956836f9d41efae",
+  "name": "home-page",
+  "tsconfigPath": "./src/server/tsconfig.json"
+}
