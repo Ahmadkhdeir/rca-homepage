@@ -1,7 +1,54 @@
 import "./app.css";
+import { useEffect, useRef } from "react";
 import riskPreview from "./riskPreview";
 
 export default function App() {
+  const previewRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = previewRef.current;
+    if (!el) return;
+    el.innerHTML = riskPreview;
+    el.querySelectorAll("script").forEach(old => {
+      const s = document.createElement("script");
+      s.textContent = old.textContent;
+      old.replaceWith(s);
+    });
+  }, []);
+
+  useEffect(() => {
+    const trigger = () => {
+      document.querySelectorAll(".compare-card").forEach(card => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 60) {
+          card.classList.add("animated");
+        }
+      });
+    };
+    trigger();
+    window.addEventListener("scroll", trigger, { passive: true });
+    return () => window.removeEventListener("scroll", trigger);
+  }, []);
+
+  useEffect(() => {
+    const countUp = (id: string, target: number, duration: number, delay: number) => {
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const start = performance.now();
+        const step = (now: number) => {
+          const p = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(eased * target).toString();
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }, delay);
+    };
+    countUp("pitch-six", 6, 1000, 400);
+    countUp("pitch-thirty", 30, 1400, 600);
+  }, []);
+
   return (
     <div className="summit-root">
 
@@ -9,27 +56,41 @@ export default function App() {
       <section className="summit-hero">
         <div className="summit-hero-grid">
 
-          {/* LEFT — Brand */}
-          <div className="summit-hero-content">
-            <div className="hero-badge">
-              <span className="hero-badge-dot" />
-              ServiceNow CoE Summit 2026 · UK Hackathon
+          {/* LEFT — Brand + Pitch */}
+          <div className="summit-hero-left">
+            <div className="summit-hero-content">
+              <div className="hero-badge">
+                <span className="hero-badge-dot" />
+                ServiceNow CoE Summit 2026 · UK Hackathon
+              </div>
+
+              <h1>
+                Change Risk <span className="title-accent">Analyzer</span>
+              </h1>
+
+              <p className="hero-tagline">Know your risk before you deploy.</p>
+
+              <div className="hero-ai-text">Smarter with<br />AI</div>
+
+              <a href="/x_488299_change_ri_dashboard.do" className="hero-cta">
+                Open the App →
+              </a>
             </div>
 
-            <h1>
-              Change Risk <span className="title-accent">Analyzer</span>
-            </h1>
-
-            <p className="hero-tagline">Know your risk before you deploy.</p>
-
-            <p className="hero-desc">
-              Automated risk analysis for every ServiceNow Update Set.
-              Six checks, one risk score, and a clear explanation before you deploy.
-            </p>
-
-            <a href="/x_488299_change_ri_dashboard.do" className="hero-cta">
-              Open the App →
-            </a>
+            <div className="hero-pitch-row">
+              <div className="hero-pitch-card">
+                <div className="hero-pitch-num" id="pitch-six">0</div>
+                <div className="hero-pitch-label">Automated checks</div>
+              </div>
+              <div className="hero-pitch-card">
+                <div className="hero-pitch-num">&lt;<span id="pitch-thirty">0</span>s</div>
+                <div className="hero-pitch-label">Per analysis</div>
+              </div>
+              <div className="hero-pitch-card">
+                <div className="hero-pitch-num">0</div>
+                <div className="hero-pitch-label">Manual steps</div>
+              </div>
+            </div>
           </div>
 
           {/* RIGHT — Live preview */}
@@ -54,11 +115,60 @@ export default function App() {
             </div>
 
             <div
+              ref={previewRef}
               className="risk-preview-wrapper"
-              dangerouslySetInnerHTML={{ __html: riskPreview }}
+              style={{ pointerEvents: "none" }}
             />
           </div>
 
+        </div>
+      </section>
+
+      {/* ── WITHOUT / WITH ── */}
+      <section className="summit-section compare-section">
+        <div className="compare-grid">
+          <div className="compare-card compare-card--bad">
+            <div className="compare-header">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e5534b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              <span>Without CRA</span>
+            </div>
+            {[
+              "Deployments go out with no risk review",
+              "Guesswork instead of data",
+              "One bad ACL can silently break production",
+              "No audit trail on what changed or why",
+              "Reviewing Update Sets is slow and manual",
+            ].map(t => (
+              <div className="compare-row" key={t}>
+                <div className="compare-icon compare-icon--bad">✕</div>
+                <span>{t}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="compare-card compare-card--good">
+            <div className="compare-header">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2da44e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <span>With CRA</span>
+            </div>
+            {[
+              "Every Update Set scored before it ships",
+              "One clear risk score, no interpretation needed",
+              "Six checks catch what humans miss every time",
+              "Full audit trail on every analysis, automatically",
+              "AI recommends the right reviewer in seconds",
+            ].map(t => (
+              <div className="compare-row" key={t}>
+                <div className="compare-icon compare-icon--good">✓</div>
+                <span>{t}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -118,18 +228,28 @@ export default function App() {
 
         </div>
 
+        <div className="section-label" style={{ marginTop: "2.5rem" }}>How It Works</div>
         <div className="value-grid">
           <div className="value-card">
-            <strong>Why this matters</strong>
-            <p>One unchecked deployment can break production. CRA flags risk before changes go live.</p>
+            <div className="value-step-row">
+              <div className="value-step-num">1</div>
+              <strong>Open an Update Set</strong>
+            </div>
+            <p>Select any Update Set from the dropdown! all records are pulled in automatically, no manual input needed.</p>
           </div>
           <div className="value-card">
-            <strong>Why ServiceNow</strong>
-            <p>Native scoped app. No data leaves the platform. Integrates with Update Sets, Change Tickets, and Users.</p>
+            <div className="value-step-row">
+              <div className="value-step-num">2</div>
+              <strong>Click "Analyze Risk"</strong>
+            </div>
+            <p>One click triggers 6 automated checks! sensitive tables, ACLs, business rules, record volume, and more.</p>
           </div>
           <div className="value-card">
-            <strong>Why CoE</strong>
-            <p>A reusable pattern any team can adopt, with governance built in from day one.</p>
+            <div className="value-step-row">
+              <div className="value-step-num">3</div>
+              <strong>Review the Result</strong>
+            </div>
+            <p>Get a risk score, a plain English AI explanation, and a recommended reviewer! before you deploy.</p>
           </div>
         </div>
       </section>
@@ -144,16 +264,28 @@ export default function App() {
             <img src="ahmad.jpg" className="team-avatar" />
             <div className="team-name">Ahmad Khdeir</div>
             <div className="team-role">ServiceNow Developer</div>
+            <a href="https://www.linkedin.com/in/ahmadkhdeir" target="_blank" rel="noreferrer" className="team-linkedin">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
           </div>
           <div className="team-member">
             <img src="karl.jpg" className="team-avatar" />
             <div className="team-name">Karl Gatzemeier</div>
             <div className="team-role">ServiceNow Developer</div>
+            <a href="https://www.linkedin.com/in/karl-m-gatzemeier" target="_blank" rel="noreferrer" className="team-linkedin">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
           </div>
           <div className="team-member">
             <img src="leo.jpg" className="team-avatar" />
             <div className="team-name">Leonard Haus</div>
             <div className="team-role">Senior ServiceNow Consultant</div>
+            <a href="https://www.linkedin.com/in/leonard-haus-98b6322b7" target="_blank" rel="noreferrer" className="team-linkedin">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
           </div>
         </div>
       </section>
@@ -164,7 +296,7 @@ export default function App() {
           className="cta-secondary"
           onClick={() => (window.location.href = "/x_488299_change_ri_dashboard.do")}
         >
-          Explore the Risk Application
+          Explore the App
         </button>
       </section>
 

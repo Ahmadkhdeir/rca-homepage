@@ -5,6 +5,205 @@
   <!-- Initialize globals and Include ServiceNow's required scripts -->
   <sdk:now-ux-globals></sdk:now-ux-globals>
 
+  <style>
+    /* ── Base ── */
+    html, body, #root { background-color: #ffffff !important; }
+    .summit-root {
+      background-color: #ffffff !important;
+      background-image: radial-gradient(rgba(36,73,145,0.04) 1px, transparent 1px) !important;
+      background-size: 28px 28px !important;
+      color: #1a2238 !important;
+      font-family: "Segoe UI", Inter, system-ui, sans-serif !important;
+    }
+
+    /* ── Text colour reset ── */
+    .summit-root * { color: #1a2238 !important; }
+    .summit-root .title-accent { color: transparent !important; -webkit-text-fill-color: transparent !important; }
+    .summit-root .hero-cta, .summit-root .hero-cta:hover { color: #ffffff !important; }
+    .summit-root .section-label  { color: #2D9EDF !important; }
+    .summit-root .hero-tagline   { color: rgba(26,34,56,0.88) !important; }
+    .summit-root .hero-desc, .summit-root .feature-desc, .summit-root .value-card p { color: rgba(26,34,56,0.6) !important; }
+    .summit-root .hero-badge     { color: rgba(26,34,56,0.72) !important; }
+    .summit-root .team-role      { color: rgba(26,34,56,0.55) !important; }
+    .summit-root .cta-secondary  { color: rgba(26,34,56,0.7)  !important; }
+    .summit-root .preview-stat-label { color: rgba(26,34,56,0.5) !important; }
+    .summit-root .value-card strong  { color: #244991 !important; }
+    .summit-root .preview-stat.risk-stat .preview-stat-value { color: #e5534b !important; }
+    .summit-root .preview-stat.ai-stat  .preview-stat-value  { color: #244991 !important; }
+    .summit-root .status-pill    { color: #244991 !important; }
+    .summit-root .analyzing-badge { color: #244991 !important; }
+    .summit-root .app-sub        { color: #9ca3af !important; }
+    .summit-root .step-label     { color: #aaa !important; }
+    .summit-root .step.active .step-label { color: #a06200 !important; }
+    .summit-root .step.done   .step-label { color: #1a7a38 !important; }
+    .summit-root .step-detail    { color: #ccc !important; }
+    .summit-root .step.done   .step-detail { color: #2da44e !important; }
+    .summit-root .step.active .step-detail { color: #c97d00 !important; }
+    .summit-root .subject-meta, .summit-root .result-meta { color: #9aa0ad !important; }
+    .summit-root .gauge-number   { color: #ccc !important; }
+    .summit-root .result-card.revealed .gauge-number { color: #e5534b !important; }
+    .summit-root .result-badge   { color: #999 !important; }
+    .summit-root .result-card.revealed .result-badge { color: white !important; }
+    .summit-root .gauge-label    { color: #bbb !important; }
+    .summit-root .step-icon-inner { color: #aaa !important; }
+    .summit-root .step.active .step-icon-inner,
+    .summit-root .step.done   .step-icon-inner { color: white !important; }
+
+    /* ── AI text shimmer ── */
+    @keyframes hero-ai-shimmer { 0% { background-position: 0% center; } 100% { background-position: 250% center; } }
+    .summit-root .hero-ai-text {
+      font-size: 4rem !important; font-weight: 800 !important; letter-spacing: -0.03em !important;
+      line-height: 1 !important; padding: 2.2rem 0 !important;
+      background: linear-gradient(90deg,#244991 0%,#2D9EDF 40%,#a78bfa 60%,#244991 100%) !important;
+      background-size: 250% auto !important;
+      -webkit-background-clip: text !important; background-clip: text !important;
+      -webkit-text-fill-color: transparent !important; color: transparent !important;
+      animation: hero-ai-shimmer 4s linear infinite !important;
+    }
+
+    /* ── Pitch cards ── */
+    .summit-root .hero-pitch-content { display: flex !important; flex-direction: column !important; }
+    .summit-root .hero-pitch-row { display: flex !important; gap: 0.75rem !important; margin-top: auto !important; padding-top: 1.5rem !important; }
+    .summit-root .hero-pitch-card {
+      flex: 1 !important;
+      display: flex !important; flex-direction: column !important; gap: 4px !important;
+      background: #f4f8fd !important;
+      border: 1px solid rgba(36,73,145,0.14) !important;
+      border-radius: 14px !important;
+      padding: 0.9rem 1rem !important;
+    }
+    .summit-root .hero-pitch-num {
+      display: block !important;
+      font-size: 1.55rem !important; font-weight: 800 !important; line-height: 1 !important;
+      background: linear-gradient(135deg,#244991,#2D9EDF) !important;
+      -webkit-background-clip: text !important; background-clip: text !important;
+      -webkit-text-fill-color: transparent !important; color: transparent !important;
+    }
+    .summit-root .hero-pitch-label {
+      display: block !important;
+      font-size: 0.68rem !important; font-weight: 600 !important;
+      color: rgba(26,34,56,0.5) !important;
+      text-transform: uppercase !important; letter-spacing: 0.07em !important;
+    }
+
+    /* ── Hero ── */
+    .summit-root .hero-badge {
+      background: rgba(45,158,223,0.1) !important;
+      border: 1px solid rgba(45,158,223,0.3) !important;
+    }
+    .summit-root .title-accent {
+      background: linear-gradient(130deg,#244991 0%,#2D9EDF 100%) !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+    }
+    .summit-root .hero-cta {
+      background: linear-gradient(135deg,#244991,#2D9EDF) !important;
+      box-shadow: 0 8px 32px rgba(45,158,223,0.35) !important;
+    }
+    .summit-root .summit-hero-preview {
+      background: linear-gradient(148deg,#ffffff 0%,#f0f7fc 100%) !important;
+      border: 1px solid rgba(45,158,223,0.15) !important;
+      box-shadow: 0 30px 80px rgba(36,73,145,0.12) !important;
+    }
+
+    /* ── Stat chips ── */
+    .summit-root .preview-stat {
+      background: rgba(36,73,145,0.04) !important;
+      border: 1px solid rgba(36,73,145,0.1) !important;
+    }
+    .summit-root .preview-stat.risk-stat {
+      background: rgba(229,83,75,0.08) !important;
+      border-color: rgba(229,83,75,0.28) !important;
+    }
+    .summit-root .preview-stat.ai-stat {
+      background: rgba(36,73,145,0.08) !important;
+      border-color: rgba(36,73,145,0.25) !important;
+    }
+
+    /* ── Feature cards ── */
+    .summit-root .feature-item {
+      background: #ffffff !important;
+      border: 1px solid rgba(36,73,145,0.14) !important;
+      box-shadow: 0 2px 12px rgba(36,73,145,0.07) !important;
+      border-radius: 18px !important;
+    }
+    .summit-root .feature-item:hover {
+      background: #f0f7fc !important;
+      border-color: rgba(45,158,223,0.35) !important;
+      box-shadow: 0 18px 48px rgba(45,158,223,0.14) !important;
+    }
+    .summit-root .feature-icon-ai { background: rgba(36,73,145,0.1) !important; }
+
+    /* ── Value cards ── */
+    .summit-root .value-card {
+      background: #f4f8fd !important;
+      border: 1px solid rgba(45,158,223,0.2) !important;
+      box-shadow: 0 1px 6px rgba(36,73,145,0.05) !important;
+    }
+    .summit-root .value-step-row { display: flex !important; align-items: center !important; gap: 10px !important; }
+    .summit-root .value-step-num {
+      width: 28px !important; height: 28px !important;
+      border-radius: 50% !important;
+      background: linear-gradient(135deg,#244991,#2D9EDF) !important;
+      color: #fff !important;
+      display: flex !important; align-items: center !important; justify-content: center !important;
+      flex-shrink: 0 !important;
+    }
+
+    /* ── Compare section ── */
+    .summit-root .compare-grid { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 1.25rem !important; }
+    .summit-root .compare-card { border-radius: 18px !important; padding: 2rem !important; display: flex !important; flex-direction: column !important; gap: 1rem !important; }
+    .summit-root .compare-card--bad  { background: rgba(229,83,75,0.04) !important; border: 1.5px solid rgba(229,83,75,0.25) !important; }
+    .summit-root .compare-card--good { background: rgba(45,164,78,0.04)  !important; border: 1.5px solid rgba(45,164,78,0.25)  !important; }
+    .summit-root .compare-header { display: flex !important; align-items: center !important; gap: 9px !important; font-size: 0.72rem !important; font-weight: 800 !important; text-transform: uppercase !important; letter-spacing: 0.14em !important; margin-bottom: 0.25rem !important; }
+    .summit-root .compare-card--bad  .compare-header { color: #e5534b !important; }
+    .summit-root .compare-card--good .compare-header { color: #2da44e !important; }
+    .summit-root .compare-row { display: flex !important; align-items: center !important; gap: 12px !important; font-size: 0.92rem !important; color: #1a2238 !important; }
+    .summit-root .compare-icon { width: 22px !important; height: 22px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 11px !important; font-weight: 800 !important; flex-shrink: 0 !important; }
+    .summit-root .compare-icon--bad  { background: rgba(229,83,75,0.12) !important; color: #e5534b !important; }
+    .summit-root .compare-icon--good { background: rgba(45,164,78,0.12)  !important; color: #2da44e !important; }
+    .summit-root .compare-card .compare-header,
+    .summit-root .compare-card .compare-row { opacity: 0; transform: translateY(16px); transition: opacity 0.4s ease, transform 0.4s ease; }
+    .summit-root .compare-card.animated .compare-header         { opacity: 1 !important; transform: none !important; transition-delay: 0.00s; }
+    .summit-root .compare-card.animated .compare-row:nth-child(2) { opacity: 1 !important; transform: none !important; transition-delay: 0.10s; }
+    .summit-root .compare-card.animated .compare-row:nth-child(3) { opacity: 1 !important; transform: none !important; transition-delay: 0.20s; }
+    .summit-root .compare-card.animated .compare-row:nth-child(4) { opacity: 1 !important; transform: none !important; transition-delay: 0.30s; }
+    .summit-root .compare-card.animated .compare-row:nth-child(5) { opacity: 1 !important; transform: none !important; transition-delay: 0.40s; }
+    .summit-root .compare-card.animated .compare-row:nth-child(6) { opacity: 1 !important; transform: none !important; transition-delay: 0.50s; }
+
+    /* ── Section label ── */
+    .summit-root .section-label { letter-spacing: 0.16em !important; font-weight: 700 !important; font-size: 0.7rem !important; text-transform: uppercase !important; }
+
+    /* ── Widget ── */
+    .summit-root .app-icon { background: #244991 !important; }
+    .summit-root .status-pill {
+      background: rgba(45,158,223,0.1) !important;
+      border: 1px solid rgba(45,158,223,0.3) !important;
+    }
+    .summit-root .analyzing-badge {
+      background: #e8f4fb !important;
+      border: 1px solid rgba(45,158,223,0.35) !important;
+    }
+    .summit-root .spinner { border-color: #2D9EDF !important; border-top-color: transparent !important; }
+    .summit-root .loop-dot.active { background: #2D9EDF !important; }
+    .summit-root .step { border: 1px solid #e4eaf2 !important; }
+
+    /* ── Footer button ── */
+    .summit-root .cta-secondary { border: 1px solid rgba(36,73,145,0.22) !important; }
+    .summit-root .cta-secondary:hover {
+      border-color: #2D9EDF !important;
+      background: rgba(45,158,223,0.07) !important;
+    }
+
+    /* ── Team LinkedIn ── */
+    .summit-root .team-linkedin { display: inline-flex !important; align-items: center !important; gap: 6px !important; margin-top: 0.5rem !important; padding: 5px 14px !important; border-radius: 20px !important; border: 1px solid rgba(36,73,145,0.25) !important; background: transparent !important; color: #244991 !important; font-size: 0.75rem !important; font-weight: 600 !important; text-decoration: none !important; }
+    .summit-root .team-linkedin:hover { background: rgba(45,158,223,0.08) !important; border-color: #2D9EDF !important; }
+
+    /* ── Team avatars ── */
+    .summit-root .team-avatar { border: 3px solid rgba(36,73,145,0.15) !important; box-shadow: 0 6px 22px rgba(36,73,145,0.1) !important; }
+    .summit-root .team-member:hover .team-avatar { border-color: #2D9EDF !important; box-shadow: 0 14px 36px rgba(45,158,223,0.28) !important; }
+  </style>
+
   <!-- Include your React entry point -->
   <script src="./main.tsx" type="module"></script>
 </head>
