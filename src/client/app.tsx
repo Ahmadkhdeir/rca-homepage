@@ -70,7 +70,43 @@ export default function App() {
 
               <p className="hero-tagline">Know your risk before you deploy.</p>
 
-              <div className="hero-ai-text">Smarter with<br />AI</div>
+              <div className="hero-flow">
+                <div className="hero-flow-step">
+                  <div className="hero-flow-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#244991" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="hero-flow-label">Select</div>
+                    <div className="hero-flow-sub">Pick any Update Set from the list</div>
+                  </div>
+                </div>
+                <div className="hero-flow-connector" />
+                <div className="hero-flow-step">
+                  <div className="hero-flow-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#244991" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="hero-flow-label">Analyze</div>
+                    <div className="hero-flow-sub">6 checks run automatically in seconds</div>
+                  </div>
+                </div>
+                <div className="hero-flow-connector" />
+                <div className="hero-flow-step">
+                  <div className="hero-flow-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#244991" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="hero-flow-label">Decide</div>
+                    <div className="hero-flow-sub">Assign a reviewer or block the deploy</div>
+                  </div>
+                </div>
+              </div>
 
               <a href="/x_488299_change_ri_dashboard.do" className="hero-cta">
                 Open the App →
@@ -95,25 +131,6 @@ export default function App() {
 
           {/* RIGHT — Live preview */}
           <div className="summit-hero-preview">
-            <div className="preview-stats">
-              <div className="preview-stat risk-stat">
-                <span className="preview-stat-value">78</span>
-                <span className="preview-stat-label">Risk Score</span>
-              </div>
-              <div className="preview-stat">
-                <span className="preview-stat-value">6</span>
-                <span className="preview-stat-label">Analysis Stages</span>
-              </div>
-              <div className="preview-stat">
-                <span className="preview-stat-value">3</span>
-                <span className="preview-stat-label">Risk Levels</span>
-              </div>
-              <div className="preview-stat ai-stat">
-                <span className="preview-stat-value">AI</span>
-                <span className="preview-stat-label">Powered</span>
-              </div>
-            </div>
-
             <div
               ref={previewRef}
               className="risk-preview-wrapper"
@@ -228,35 +245,11 @@ export default function App() {
 
         </div>
 
-        <div className="section-label" style={{ marginTop: "2.5rem" }}>How It Works</div>
-        <div className="value-grid">
-          <div className="value-card">
-            <div className="value-step-row">
-              <div className="value-step-num">1</div>
-              <strong>Open an Update Set</strong>
-            </div>
-            <p>Select any Update Set from the dropdown! all records are pulled in automatically, no manual input needed.</p>
-          </div>
-          <div className="value-card">
-            <div className="value-step-row">
-              <div className="value-step-num">2</div>
-              <strong>Click "Analyze Risk"</strong>
-            </div>
-            <p>One click triggers 6 automated checks! sensitive tables, ACLs, business rules, record volume, and more.</p>
-          </div>
-          <div className="value-card">
-            <div className="value-step-row">
-              <div className="value-step-num">3</div>
-              <strong>Review the Result</strong>
-            </div>
-            <p>Get a risk score, a plain English AI explanation, and a recommended reviewer! before you deploy.</p>
-          </div>
-        </div>
       </section>
 
       {/* ── TEAM ── */}
       <section className="summit-section team-section">
-        <div className="section-label">Built by</div>
+        <div className="section-label team-built-label">Built with <span className="heart-blue">♥</span> by</div>
         <h3>Hackathon Team</h3>
 
         <div className="team-grid">

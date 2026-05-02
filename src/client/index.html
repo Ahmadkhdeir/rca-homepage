@@ -25,11 +25,13 @@
     .summit-root .hero-desc, .summit-root .feature-desc, .summit-root .value-card p { color: rgba(26,34,56,0.6) !important; }
     .summit-root .hero-badge     { color: rgba(26,34,56,0.72) !important; }
     .summit-root .team-role      { color: rgba(26,34,56,0.55) !important; }
-    .summit-root .cta-secondary  { color: rgba(26,34,56,0.7)  !important; }
+    .summit-root .cta-secondary  { color: #ffffff !important; }
     .summit-root .preview-stat-label { color: rgba(26,34,56,0.5) !important; }
     .summit-root .value-card strong  { color: #244991 !important; }
-    .summit-root .preview-stat.risk-stat .preview-stat-value { color: #e5534b !important; }
-    .summit-root .preview-stat.ai-stat  .preview-stat-value  { color: #244991 !important; }
+    .summit-root .preview-stat.risk-stat    .preview-stat-value { color: #e5534b !important; }
+    .summit-root .preview-stat.stages-stat  .preview-stat-value { color: #2D9EDF !important; }
+    .summit-root .preview-stat.levels-stat  .preview-stat-value { color: #2da44e !important; }
+    .summit-root .preview-stat.ai-stat      .preview-stat-value { color: #9b6dff !important; }
     .summit-root .status-pill    { color: #244991 !important; }
     .summit-root .analyzing-badge { color: #244991 !important; }
     .summit-root .app-sub        { color: #9ca3af !important; }
@@ -52,8 +54,8 @@
     /* ── AI text shimmer ── */
     @keyframes hero-ai-shimmer { 0% { background-position: 0% center; } 100% { background-position: 250% center; } }
     .summit-root .hero-ai-text {
-      font-size: 4rem !important; font-weight: 800 !important; letter-spacing: -0.03em !important;
-      line-height: 1 !important; padding: 2.2rem 0 !important;
+      font-size: 2.2rem !important; font-weight: 800 !important; letter-spacing: -0.03em !important;
+      line-height: 1.15 !important; padding: 1.1rem 0 !important;
       background: linear-gradient(90deg,#244991 0%,#2D9EDF 40%,#a78bfa 60%,#244991 100%) !important;
       background-size: 250% auto !important;
       -webkit-background-clip: text !important; background-clip: text !important;
@@ -74,16 +76,17 @@
     }
     .summit-root .hero-pitch-num {
       display: block !important;
-      font-size: 1.55rem !important; font-weight: 800 !important; line-height: 1 !important;
-      background: linear-gradient(135deg,#244991,#2D9EDF) !important;
-      -webkit-background-clip: text !important; background-clip: text !important;
-      -webkit-text-fill-color: transparent !important; color: transparent !important;
+      font-size: 1.7rem !important; font-weight: 800 !important; line-height: 1 !important;
+      letter-spacing: -0.04em !important;
+      color: #2D9EDF !important;
+      background: none !important;
+      -webkit-text-fill-color: #2D9EDF !important;
     }
     .summit-root .hero-pitch-label {
       display: block !important;
-      font-size: 0.68rem !important; font-weight: 600 !important;
-      color: rgba(26,34,56,0.5) !important;
-      text-transform: uppercase !important; letter-spacing: 0.07em !important;
+      font-size: 0.65rem !important; font-weight: 600 !important;
+      color: rgba(26,34,56,0.42) !important;
+      text-transform: uppercase !important; letter-spacing: 0.08em !important;
     }
 
     /* ── Hero ── */
@@ -115,9 +118,17 @@
       background: rgba(229,83,75,0.08) !important;
       border-color: rgba(229,83,75,0.28) !important;
     }
+    .summit-root .preview-stat.stages-stat {
+      background: rgba(45,158,223,0.08) !important;
+      border-color: rgba(45,158,223,0.28) !important;
+    }
+    .summit-root .preview-stat.levels-stat {
+      background: rgba(45,164,78,0.08) !important;
+      border-color: rgba(45,164,78,0.28) !important;
+    }
     .summit-root .preview-stat.ai-stat {
-      background: rgba(36,73,145,0.08) !important;
-      border-color: rgba(36,73,145,0.25) !important;
+      background: rgba(155,109,255,0.08) !important;
+      border-color: rgba(155,109,255,0.28) !important;
     }
 
     /* ── Feature cards ── */
@@ -171,6 +182,10 @@
     .summit-root .compare-card.animated .compare-row:nth-child(5) { opacity: 1 !important; transform: none !important; transition-delay: 0.40s; }
     .summit-root .compare-card.animated .compare-row:nth-child(6) { opacity: 1 !important; transform: none !important; transition-delay: 0.50s; }
 
+    /* ── Heart ── */
+    .summit-root .heart-blue { color: #2D9EDF !important; }
+    .summit-root .team-built-label { font-size: 1rem !important; letter-spacing: 0.04em !important; text-transform: none !important; font-weight: 600 !important; }
+
     /* ── Section label ── */
     .summit-root .section-label { letter-spacing: 0.16em !important; font-weight: 700 !important; font-size: 0.7rem !important; text-transform: uppercase !important; }
 
@@ -189,11 +204,8 @@
     .summit-root .step { border: 1px solid #e4eaf2 !important; }
 
     /* ── Footer button ── */
-    .summit-root .cta-secondary { border: 1px solid rgba(36,73,145,0.22) !important; }
-    .summit-root .cta-secondary:hover {
-      border-color: #2D9EDF !important;
-      background: rgba(45,158,223,0.07) !important;
-    }
+    .summit-root .cta-secondary { background: linear-gradient(135deg,#244991,#2D9EDF) !important; border: none !important; padding: 0.9rem 2.5rem !important; border-radius: 12px !important; font-size: 1rem !important; font-weight: 700 !important; box-shadow: 0 8px 32px rgba(45,158,223,0.35) !important; }
+    .summit-root .cta-secondary:hover { transform: translateY(-2px) !important; box-shadow: 0 14px 40px rgba(45,158,223,0.45) !important; opacity: 0.93 !important; }
 
     /* ── Team LinkedIn ── */
     .summit-root .team-linkedin { display: inline-flex !important; align-items: center !important; gap: 6px !important; margin-top: 0.5rem !important; padding: 5px 14px !important; border-radius: 20px !important; border: 1px solid rgba(36,73,145,0.25) !important; background: transparent !important; color: #244991 !important; font-size: 0.75rem !important; font-weight: 600 !important; text-decoration: none !important; }
@@ -202,6 +214,14 @@
     /* ── Team avatars ── */
     .summit-root .team-avatar { border: 3px solid rgba(36,73,145,0.15) !important; box-shadow: 0 6px 22px rgba(36,73,145,0.1) !important; }
     .summit-root .team-member:hover .team-avatar { border-color: #2D9EDF !important; box-shadow: 0 14px 36px rgba(45,158,223,0.28) !important; }
+
+    /* ── Hero flow mini steps ── */
+    .summit-root .hero-flow { display: flex !important; flex-direction: column !important; gap: 0 !important; margin: 1.25rem 0 1.5rem !important; }
+    .summit-root .hero-flow-step { display: flex !important; align-items: center !important; gap: 0.75rem !important; padding: 0.55rem 0 !important; }
+    .summit-root .hero-flow-icon { width: 32px !important; height: 32px !important; border-radius: 9px !important; background: rgba(36,73,145,0.08) !important; display: flex !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important; }
+    .summit-root .hero-flow-label { font-size: 0.87rem !important; font-weight: 700 !important; color: #1a2238 !important; line-height: 1 !important; margin-bottom: 2px !important; }
+    .summit-root .hero-flow-sub { font-size: 0.72rem !important; color: rgba(26,34,56,0.5) !important; line-height: 1 !important; }
+    .summit-root .hero-flow-connector { width: 1px !important; height: 10px !important; background: rgba(36,73,145,0.15) !important; margin-left: 15px !important; }
   </style>
 
   <!-- Include your React entry point -->
